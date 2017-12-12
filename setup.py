@@ -44,8 +44,6 @@ ENTRY_POINTS = {
     # Entry point used to specify packages containing tutorials accessible
     # from welcome screen. Tutorials are saved Orange Workflows (.ows files).
     'orange.widgets.tutorials': (
-        # Syntax: any_text = path.to.package.containing.tutorials
-        'exampletutorials = orangecontrib.d3trax.tutorials',
     ),
 
     # Entry point used to specify packages containing widgets.
@@ -53,7 +51,7 @@ ENTRY_POINTS = {
         # Syntax: category name = path.to.package.containing.widgets
         # Widget category specification can be seen in
         #    orangecontrib/d3trax/widgets/__init__.py
-        'Examples = orangecontrib.d3trax.widgets',
+        'd3trax = orangecontrib.d3trax.widgets',
     ),
 
     # Register widget help
@@ -75,22 +73,7 @@ TEST_SUITE = "setup._discover_tests"
 AUTHOR = 'Audrius Rudalevicius'
 
 
-def include_documentation(local_dir, install_dir):
-    global DATA_FILES
-    if 'bdist_wheel' in sys.argv and not path.exists(local_dir):
-        print("Directory '{}' does not exist. "
-              "Please build documentation before running bdist_wheel."
-              .format(path.abspath(local_dir)))
-        sys.exit(0)
-
-    doc_files = []
-    for dirpath, dirs, files in walk(local_dir):
-        doc_files.append((dirpath.replace(local_dir, install_dir),
-                          [path.join(dirpath, f) for f in files]))
-    DATA_FILES.extend(doc_files)
-
 if __name__ == '__main__':
-    include_documentation('doc/build/html', 'help/orange3-d3trax')
     setup(
         name=NAME,
         version=VERSION,
