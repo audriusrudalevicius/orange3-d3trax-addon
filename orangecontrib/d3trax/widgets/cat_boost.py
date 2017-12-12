@@ -4,7 +4,6 @@ from AnyQt.QtCore import Qt
 
 from Orange.base import Learner
 from Orange.data import Table
-from Orange.modelling import SklTreeLearner
 
 from orangecontrib.d3trax.modeling import CatBoostLearner
 from Orange.widgets import gui
@@ -16,7 +15,7 @@ from Orange.widgets.widget import Msg, Input
 class OWCatBoost(OWBaseLearner):
     name = "CatBoost"
     description = "An ensemble meta-algorithm"
-    icon = "icons/AdaBoost.svg"
+    icon = "icons/mywidget.svg"
     category = "Model"
 
     priority = 80
@@ -64,13 +63,6 @@ class OWCatBoost(OWBaseLearner):
             label="Fixed seed for random generator:", alignment=Qt.AlignRight,
             callback=self.settings_changed, checked="use_random_seed",
             checkCallback=self.settings_changed)
-
-        # Algorithms
-        box = gui.widgetBox(self.controlArea, "Boosting method")
-        self.reg_algorithm_combo = gui.comboBox(
-            box, self, "loss_index", label="Regression loss function:",
-            items=self.losses,
-            orientation=Qt.Horizontal, callback=self.settings_changed)
 
     def create_learner(self):
         if self.base_estimator is None:
