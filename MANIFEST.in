@@ -1,0 +1,2 @@
+include orangecontrib/d3trax/tutorials/*.ows
+include orangecontrib/d3trax/widgets/icons/*
