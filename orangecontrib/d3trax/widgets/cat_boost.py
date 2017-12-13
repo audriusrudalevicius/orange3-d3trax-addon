@@ -28,6 +28,7 @@ class OWCatBoost(OWBaseLearner):
     depth = Setting(6)
     learning_rate = Setting(.03)
     loss_index = Setting(0)
+    # border = Setting(.5)
     use_random_seed = Setting(False)
     train_dir = Setting(tempfile.gettempdir())
     losses = ["Logloss", "MultiClass"]
@@ -41,7 +42,10 @@ class OWCatBoost(OWBaseLearner):
     def add_main_layout(self):
         box = gui.widgetBox(self.controlArea, "Parameters")
         self.base_estimator = self.DEFAULT_BASE_ESTIMATOR
-
+        # self.border_spin = gui.doubleSpin(
+        #     box, self, "border", 0, 1.0, .1,
+        #     label="Border:", decimals=2, alignment=Qt.AlignRight,
+        #     controlWidth=80, callback=self.settings_changed)
         self.base_label = gui.label(
             box, self, "Base learner: " + self.base_estimator.name.title() if self.base_estimator is not None  else 'None')
         self.path_edit = gui.lineEdit(box, self, "train_dir", label="Path for training:",
@@ -73,7 +77,9 @@ class OWCatBoost(OWBaseLearner):
             iterations=self.n_iterations,
             learning_rate=self.learning_rate,
             random_seed=self.random_seed,
-            preprocessors=self.preprocessors)
+            preprocessors=self.preprocessors,
+            # border=self.border
+        )
 
     @Inputs.learner
     def set_base_learner(self, learner):
