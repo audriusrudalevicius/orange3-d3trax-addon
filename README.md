@@ -1,3 +1,9 @@
+Various ML tools
+---
+
+[![Build Status](https://travis-ci.org/audriusrudalevicius/orange3-d3trax-addon.svg?branch=dev)](https://travis-ci.org/audriusrudalevicius/orange3-d3trax-addon)
+
+
 Installation
 ------------
 
