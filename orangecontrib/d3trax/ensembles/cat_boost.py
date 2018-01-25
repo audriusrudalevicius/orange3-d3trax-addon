@@ -276,6 +276,8 @@ class SklCatBoostClassificationLearner(CatBoostLearnerClassification, _FeatureSc
 
     def __init__(self, base_estimator=None, iterations=500, learning_rate=0.03,
                  depth=6, random_seed=None, preprocessors=None, loss_function='MultiClass',
+                 calc_feature_importance=True,
+                 allow_writing_files=False,
                  train_dir=tempfile.gettempdir()):
         from Orange.modelling import Fitter
         # If fitter, get the appropriate Learner instance
@@ -293,7 +295,7 @@ class SklCatBoostRegressionLearner(CatBoostLearnerRegression, _FeatureScorerMixi
     __returns__ = CatBoostRegressor
     def __init__(self, base_estimator=None, iterations=500, learning_rate=0.03, depth=6,
                  loss_function='RMSE', random_seed=None, preprocessors=None,
-                 train_dir=tempfile.gettempdir()):
+                 train_dir=tempfile.gettempdir(), allow_writing_files=False, calc_feature_importance=True):
         from Orange.modelling import Fitter
         # If fitter, get the appropriate Learner instance
         if isinstance(base_estimator, Fitter):

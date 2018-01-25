@@ -1,5 +1,6 @@
 # Category metadata.
-
+NAME = 'd3trax'
+DESCRIPTION = 'Useful various tools'
 # Category icon show in the menu
 ICON = "icons/category.svg"
 

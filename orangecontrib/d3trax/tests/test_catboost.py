@@ -4,7 +4,7 @@ import Orange
 from orangecontrib.d3trax.ensembles import SklCatBoostRegressionLearner, SklCatBoostClassificationLearner
 
 
-class ExampleTests(unittest.TestCase):
+class CatboostTests(unittest.TestCase):
     def test_regression_voting(self):
         data = Orange.data.Table("servo")
         lr = SklCatBoostRegressionLearner()
