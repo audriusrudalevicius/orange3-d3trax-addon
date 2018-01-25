@@ -265,11 +265,6 @@ class CatBoostClassifier(CatBoostModelClassification):
     pass
 
 
-# ------------------------------------------------------ #
-# todo - allow_writing_files=False - disabled due bug
-# todo - border=.5 - disabled due bug
-
-
 class SklCatBoostClassificationLearner(CatBoostLearnerClassification, _FeatureScorerMixin):
     __wraps__ = cat_ensamble.CatBoostClassifier
     __returns__ = CatBoostClassifier
