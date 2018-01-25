@@ -9,8 +9,19 @@ from Orange.data.filter import HasClass
 from Orange.misc.wrapper_meta import WrapperMeta
 from Orange.preprocess import Continuize, RemoveNaNColumns, SklImpute
 from Orange.regression.base_regression import ModelRegression, LearnerRegression
+from Orange.preprocess.score import LearnerScorer
+from Orange.data import Variable, DiscreteVariable
 
 __all__ = ['SklCatBoostClassificationLearner', 'SklCatBoostRegressionLearner', 'CatBoostModel']
+
+
+class _FeatureScorerMixin(LearnerScorer):
+    feature_type = Variable
+    class_type = DiscreteVariable
+
+    def score(self, data):
+        model = self(data)
+        return model._model.feature_importances_
 
 
 class CatBoostModel(Model):
@@ -254,21 +265,19 @@ class CatBoostClassifier(CatBoostModelClassification):
     pass
 
 
-# ------------------------------------------------------ #
-
-
-class SklCatBoostClassificationLearner(CatBoostLearnerClassification):
+class SklCatBoostClassificationLearner(CatBoostLearnerClassification, _FeatureScorerMixin):
     __wraps__ = cat_ensamble.CatBoostClassifier
     __returns__ = CatBoostClassifier
 
     def __init__(self, base_estimator=None, iterations=500, learning_rate=0.03,
                  depth=6, random_seed=None, preprocessors=None, loss_function='MultiClass',
+                 calc_feature_importance=True,
+                 allow_writing_files=False,
                  train_dir=tempfile.gettempdir()):
         from Orange.modelling import Fitter
         # If fitter, get the appropriate Learner instance
         if isinstance(base_estimator, Fitter):
-            base_estimator = base_estimator.get_learner(
-                base_estimator.CLASSIFICATION)
+            base_estimator = base_estimator.get_learner(base_estimator.CLASSIFICATION)
         # If sklearn learner, get the underlying sklearn representation
         if isinstance(base_estimator, SklLearner):
             base_estimator = base_estimator.__wraps__(**base_estimator.params)
@@ -276,18 +285,16 @@ class SklCatBoostClassificationLearner(CatBoostLearnerClassification):
         self.params = vars()
 
 
-class SklCatBoostRegressionLearner(CatBoostLearnerRegression):
+class SklCatBoostRegressionLearner(CatBoostLearnerRegression, _FeatureScorerMixin):
     __wraps__ = cat_ensamble.CatBoostRegressor
     __returns__ = CatBoostRegressor
-
     def __init__(self, base_estimator=None, iterations=500, learning_rate=0.03, depth=6,
                  loss_function='RMSE', random_seed=None, preprocessors=None,
-                 train_dir=tempfile.gettempdir()):
+                 train_dir=tempfile.gettempdir(), allow_writing_files=False, calc_feature_importance=True):
         from Orange.modelling import Fitter
         # If fitter, get the appropriate Learner instance
         if isinstance(base_estimator, Fitter):
-            base_estimator = base_estimator.get_learner(
-                base_estimator.REGRESSION)
+            base_estimator = base_estimator.get_learner(base_estimator.REGRESSION)
         # If sklearn learner, get the underlying sklearn representation
         if isinstance(base_estimator, SklLearner):
             base_estimator = base_estimator.__wraps__(**base_estimator.params)
