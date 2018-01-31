@@ -84,6 +84,16 @@ class OWCatBoost(OWBaseLearner):
             border=self.border
         )
 
+    def get_learner_parameters(self):
+        return (
+            ("Maximal tree depth", self.depth),
+            ("Maximum number of trees", self.n_iterations),
+            ("Learning rate", self.learning_rate),
+            ("Border", self.border),
+            ("Loss", self.losses[int(self.loss_index)]),
+            ("Random seed", self.use_random_seed if self.use_random_seed is not None else None)
+        )
+
     @Inputs.learner
     def set_base_learner(self, learner):
         if learner and not learner.supports_weights:
