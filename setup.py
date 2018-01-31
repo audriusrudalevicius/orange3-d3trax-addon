@@ -32,7 +32,7 @@ DATA_FILES = [
 ]
 
 INSTALL_REQUIRES = [
-    'Orange3', 'catboost>=0.5.2.1', 'numpy', 'pandas', 'dedupe', 'AnyQt'
+    'Orange3', 'catboost>=0.5.2.1', 'numpy', 'pandas', 'dedupe', 'AnyQt', 'PyQt5'
 ]
 
 ENTRY_POINTS = {
