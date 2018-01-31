@@ -1,0 +1,18 @@
+[
+  {
+    "field_definition": [
+      {
+        "field": "field_a",
+        "type": "String",
+        "has missing": true,
+        "identificator": true
+      },
+      {
+        "field": "field_b",
+        "type": "String",
+        "has missing": true
+      }
+    ],
+    "classes": ["match", "distinct"]
+  }
+]

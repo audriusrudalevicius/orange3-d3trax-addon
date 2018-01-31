@@ -1,0 +1,32 @@
+{
+  "match": [
+    {
+      "__class__": "tuple",
+      "__value__": [
+        {
+          "field_a": "123",
+          "field_b": "abc"
+        },
+        {
+          "field_a": "123",
+          "field_b": "abc"
+        }
+      ]
+    }
+  ],
+  "distinct": [
+    {
+      "__class__": "tuple",
+      "__value__": [
+        {
+          "field_a": "123",
+          "field_b": "abc"
+        },
+        {
+          "field_a": "900",
+          "field_b": "100"
+        }
+      ]
+    }
+  ]
+}
