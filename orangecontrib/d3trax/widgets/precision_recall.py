@@ -37,7 +37,7 @@ LiftCurve.is_valid = property(lambda self: self.points.is_valid)
 
 def check_results(results, error_group, check_nan=True):
     results = check_results_adequacy(results, error_group, check_nan)
-    if len(results.data.domain.class_var.values) > 2:
+    if results is not None and len(results.data.domain.class_var.values) > 2:
         error_group.invalid_results("Multiclass not supported.")
         return None
     return results
@@ -397,7 +397,7 @@ def cut_off_from_results(results, clf_idx, cut_off, target=1):
     ppv = tp / (tp + fp) if (tp + fp) > 0 else 0
     tpr = tp / (tp + fn) if (tp + fn) > 0 else 0
 
-    return matrix, tpr, ppv
+    return matrix_plot, tpr, ppv
 
 
 def pvrCurve_from_results(results, clf_index, target=1):
